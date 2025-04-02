@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سلة التسوق</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="cart.css" />
+  <link rel="stylesheet" href="header.css" />
+  <script src="commonscript.js"></script>
+</head>
+
+<body>
+  <div id="header-container"></div>
+
+  <h1>سلة التسوق</h1>
+  <div class="cart-container">
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>المنتج</th>
+          <th>الكمية</th>
+          <th>المجموع</th>
+          <th>إزالة</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items">
+        <tr>
+          <td colspan="4">سلة التسوق فارغة.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="cart-summary">
+      <h3>ملخص الطلب</h3>
+      <p>الإجمالي: <span id="subtotal">0</span> ريال</p>
+      <p>رسوم التوصيل: <span id="shipping">10</span> ريال</p>
+      <p><strong>المجموع النهائي:</strong> <span id="total">0</span> ريال</p>
+      <button class="btn" onclick="window.location.href='checkout.html'">إكمال عملية الطلب</button>
+
+    </div>
+    <div class="discount-container">
+      <input type="text" id="discount-code" placeholder="أكتب كود الخصم">
+      <button class="btn" onclick="applyDiscount()">تفعيل الكود</button>
+    </div>
+  </div>
+  <footer class="footer">
+    <p>+966 123 456 789 | info@example.com</p>
+    <p>© 2024 جميع الحقوق محفوظة لـ Groshn</p>
+  </footer>
+  <script>
+    function loadCart() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "login.html";
+        return;
+      }
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItemsContainer = document.getElementById("cart-items");
+      const subtotalElement = document.getElementById("subtotal");
+      const totalElement = document.getElementById("total");
+      let subtotal = 0;
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = "<tr><td colspan='4'>سلة التسوق فارغة.</td></tr>";
+        subtotalElement.textContent = totalElement.textContent = "0";
+        return;
+      }
+
+      cartItemsContainer.innerHTML = "";
+      cart.forEach((item, index) => {
+        let total = item.price * item.quantity;
+        subtotal += total;
+        cartItemsContainer.innerHTML += `
+                    <tr>
+                        <td><img src="${item.image}" alt="${item.name}"> ${item.name}</td>
+                        <td class="qty-container">
+                            <button onclick="updateQuantity(${index}, -1)">-</button>
+                            ${item.quantity}
+                            <button onclick="updateQuantity(${index}, 1)">+</button>
+                        </td>
+                        <td>${total} ريال</td>
+                        <td><button class="remove-item" onclick="removeFromCart(${index})">✖</button></td>
+                    </tr>`;
+      });
+      subtotalElement.textContent = subtotal;
+      totalElement.textContent = subtotal + 10;
+    }
+
+    function updateQuantity(index, change) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart[index].quantity + change > 0) {
+        cart[index].quantity += change;
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCart();
+    }
+
+    function removeFromCart(index) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCart();
+    }
+
+    function checkout() {
+      alert("تم إكمال الطلب بنجاح!");
+      localStorage.removeItem('cart');
+      loadCart();
+    }
+
+    document.addEventListener("DOMContentLoaded", loadCart);
+    async function loadCart() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        const res = await fetch("https://groshn.onrender.com/api/cart", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const data = await res.json();
+
+        if (!Array.isArray(data)) {
+          throw new Error("بيانات غير متوقعة من الخادم");
+        }
+
+        const cartItemsContainer = document.getElementById("cart-items");
+        const subtotalElement = document.getElementById("subtotal");
+        const totalElement = document.getElementById("total");
+        cartItemsContainer.innerHTML = "";
+
+        let subtotal = 0;
+
+        if (data.length === 0) {
+          cartItemsContainer.innerHTML = "<tr><td colspan='4'>سلة التسوق فارغة.</td></tr>";
+          subtotalElement.textContent = totalElement.textContent = "0";
+          return;
+        }
+
+        data.forEach((item, index) => {
+          const totalItemPrice = item.crop?.price * item.quantity;
+          subtotal += totalItemPrice;
+
+          cartItemsContainer.innerHTML += `
+          <tr>
+            <td><img src="${item.crop?.image || "photos/placeholder.png"}" style="width: 60px; border-radius: 5px;"> ${item.crop?.name}</td>
+            <td>${item.quantity}</td>
+            <td>${totalItemPrice} ريال</td>
+            <td><button class="remove-item" onclick="removeFromCart('${item._id}')">✖</button></td>
+          </tr>`;
+        });
+
+        subtotalElement.textContent = subtotal;
+        totalElement.textContent = subtotal + 10; // 10 ريال رسوم توصيل ثابتة
+
+      } catch (error) {
+        console.error("فشل في تحميل سلة التسوق:", error);
+        alert("فشل في تحميل سلة التسوق.");
+      }
+    }
+
+    async function removeFromCart(itemId) {
+      const token = localStorage.getItem("token");
+
+      try {
+        const res = await fetch(`https://groshn.onrender.com/api/cart/${itemId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        if (res.ok) {
+          alert("تمت إزالة المنتج من السلة");
+          loadCart();
+        } else {
+          alert("فشل في إزالة المنتج من السلة");
+        }
+      } catch (error) {
+        console.error("فشل في حذف العنصر:", error);
+        alert("حدث خطأ أثناء محاولة حذف المنتج.");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadCart);
+
+    // دالة الانتقال إلى صفحة إتمام الطلب
+    function proceedToCheckout() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      if (cart.length === 0) {
+        alert("سلة التسوق فارغة. أضف بعض المنتجات للشراء.");
+        return;
+      }
+
+      // حفظ السلة في sessionStorage أو localStorage
+      sessionStorage.setItem('checkoutCart', JSON.stringify(cart));
+
+      // الانتقال إلى صفحة إتمام الطلب
+      window.location.href = 'checkout.html';
+    }
+
+  </script>
+</body>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>زهرة الأزاليا - Groshn</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
+    body {
+      background-color: #FEFEF0;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background-color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 4px solid #B4C65C;
+    }
+    .logo img { height: 40px; }
+    .header-btn {
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+    }
+    .intro-section {
+      background-color: #d3e2aa;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .intro-section h1 {
+      font-size: 32px;
+      color: #2a6b25;
+      margin-bottom: 10px;
+    }
+    .intro-section p {
+      font-size: 18px;
+      color: #444;
+    }
+    .plant-image {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .plant-image img {
+      max-width: 250px;
+      height: auto;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    .tabs span {
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    .tabs .active {
+      color: green;
+      border-bottom: 2px solid green;
+    }
+    .plant-info {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    .plant-info > div { display: none; }
+    .plant-info > div.active { display: block; }
+    footer {
+      background-color: #e0d8b1;
+      padding: 20px;
+      color: black;
+      text-align: center;
+      border-top: 2px solid #B4C65C;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="header-btn">الصفحة الرئيسية</a>
+    <div class="logo"><img src="photos/Logo.png" alt="Groshn Logo"/></div>
+  </header>
+
+  <section class="intro-section">
+    <h1>ازرع، اسقِ، واستمتع بالجمال</h1>
+    <p>سواء كنت مبتدئًا أو خبيرًا، العناية بالنباتات تبدأ بخطوات بسيطة. هنا خطوات تساعدك على جعل كل نبتة تزدهر وتصبح جزءًا من حياتك اليومية.</p>
+  </section>
+
+  <div class="plant-image">
+    <img src="phooo/زهرة الازاليا.png" alt="زهرة الأزاليا">
+    <h2>زهرة الأزاليا</h2>
+  </div>
+
+  <div class="tabs">
+    <span class="active" onclick="showTab('about')">عن النبتة</span>
+    <span onclick="showTab('water')">الري</span>
+    <span onclick="showTab('care')">الاهتمام</span>
+  </div>
+
+  <div class="plant-info">
+    <div id="about" class="active">
+      <p>زهرة <strong>الأزاليا</strong> هي نبات مزهر مدهش يتميز بألوانه الزاهية وأزهاره الكثيفة، مما يجعلها مثالية للزراعة الزخرفية في المساحات الداخلية.</p>
+    </div>
+    <div id="water">
+      <p>ري <strong>زهرة الأزاليا</strong> يتطلب عناية خاصة للحفاظ على صحتها ونضارتها. يجب ريها عندما تجف الطبقة العلوية من التربة، مع مراعاة الرطوبة المحيطة. الطريقة الأفضل لذلك هي استخدام ماء فاتر، خالٍ من الأملاح. الري الزائد قد يسبب تعفن الجذور، لذلك يُنصح بتوفير تصريف جيد للتربة.</p>
+    </div>
+    <div id="care">
+      <p>الاهتمام بـ<strong>زهرة الأزاليا</strong> يتطلب بيئة مناسبة تشمل إضاءة غير مباشرة ودرجات حرارة معتدلة تتراوح بين 18-24 درجة مئوية. تحتاج إلى تربة حمضية وغنية بالمواد العضوية. يُفضل استخدام سماد مخصص للنباتات المزهرة بانتظام، والتأكد من إزالة الزهور الذابلة لتحفيز نمو جديد. كما يفضل تقليم الفروع للحفاظ على شكل النبات ومنع انتشاره العشوائي.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2024 جميع الحقوق محفوظة | info@example.com | +966 123 456 789</p>
+  </footer>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tabs span').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.plant-info > div').forEach(section => section.classList.remove('active'));
+      document.querySelector(`.tabs span[onclick="showTab('${tabId}')"]`).classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
+</body>
+</html>

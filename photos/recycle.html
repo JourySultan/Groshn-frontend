@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ابدأ بإعادة التدوير - Groshn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #FEFEF0;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            height: 30px;
+        }
+
+        .header-btn {
+            font-size: 18px;
+            color: #4E5B41;
+            text-decoration: none;
+        }
+
+        .main-section {
+            background-color: #a6b16b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 40px;
+            direction: rtl;
+        }
+
+        .main-section h1 {
+            font-size: 28px;
+            color: #fff;
+        }
+
+        .main-section p {
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .main-section img {
+            height: 150px;
+            object-fit: contain;
+        }
+
+        .form-section {
+            margin: 50px 20px;
+            text-align: center;
+        }
+
+        .form-section h2 {
+            color: #2a6b25;
+        }
+
+        .form-section p {
+            color: #555;
+            max-width: 600px;
+            margin: 10px auto;
+        }
+
+        .form-container {
+            background-color: #F5F5E1;
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h3 {
+            margin-bottom: 20px;
+        }
+
+        .form-container input, .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-container button {
+            background-color: #4E5B41;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .form-container button:hover {
+            background-color: #3c4733;
+        }
+
+        footer {
+            background-color: #e0d8b1;
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="header-btn">الصفحة الرئيسية</a>
+        <div class="logo">
+            <img src="Logo.png" alt="Groshn Logo">
+        </div>
+    </header>
+
+    <!-- القسم الأول -->
+    <div class="main-section">
+        <div>
+            <h1>يد وحده ماتصفق بس على الهدر تأثر</h1>
+        </div>
+        
+    </div>
+    
+    <!-- قسم من الفائض إلى المنفعة -->
+    <div class="form-section">
+        <h2>من الفائض إلى المنفعة</h2>
+        <p>
+            ساهم في دعم الاستدامة وتقليل الهدر من خلال التبرع بمخلفاتك القائمة والأوراق القابلة لإعادة التدوير. 
+            كل عملية تبرع تجمعها تُحول إلى نقاط تُضاف إلى حسابك. 
+            احصل على نقاط من "Groshn" كمكافأة يمكنك استخدامها في مشترياتك المستقبلية.
+        </p>
+        
+        <div class="form-container">
+            <h3>يرجى تعبئة الآتي:</h3>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="الاسم">
+                <input type="text" name="phone" placeholder="رقم الهاتف">
+                <select name="material_type">
+                    <option value="">نوع المخلفات</option>
+                    <option value="plastic">بلاستيك</option>
+                    <option value="paper">ورق</option>
+                    <option value="metal">معادن</option>
+                </select>
+                <select name="quantity">
+                    <option value="">الوزن المناسب</option>
+                    <option value="1-5">1 - 5 كيلوغرام</option>
+                    <option value="6-10">6 - 10 كيلوغرام</option>
+                    <option value="11+">11 كيلوغرام أو أكثر</option>
+                </select>
+                <button type="submit">تأكيد</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>تواصل معنا</p>
+        <p>+966 123 456 789 | info@example.com</p>
+        <p>© 2024 جميع الحقوق محفوظة لـ Groshn</p>
+    </footer>
+</body>
+</html>

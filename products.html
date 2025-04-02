@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاصيل Groshn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="productsstyle.css">
+    <link rel="stylesheet" href="header.css">
+
+</head>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("header.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("header-container").innerHTML = data;
+            });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const API_URL = "https://Groshn.onrender.com/api/crops/";
+        const AUTH_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2UxNWFhZWExMDM3ZDc5MjBkMjU4MzEiLCJpYXQiOjE3NDI4MjIxNTR9.Gdw5qT1YFtshj4o1BZ-RePBBtqV2_hBXyTII6-YN-vQ";
+        const productGrid = document.querySelector(".product-grid");
+        const filterItems = document.querySelectorAll(".filter-item");
+        let allProducts = [];
+      
+        function renderProducts(category) {
+            productGrid.innerHTML = "";
+            const filteredProducts = category === "all" ? allProducts : allProducts.filter(product => product.category === category);
+            
+            filteredProducts.forEach((product) => {
+              const productCard = document.createElement("a");
+              productCard.href = `product-details.html?id=${product._id}`;
+              productCard.className = "product-card";
+              productCard.style.textDecoration = "none";
+              productCard.style.color = "inherit";
+              productCard.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>${product.price} ريال</p>
+                <div class="rating">★★★★★</div>
+              `;
+              productGrid.appendChild(productCard);
+            });
+          }
+          
+        function setActiveFilter(category) {
+          filterItems.forEach(item => {
+            item.classList.remove("active");
+            if (item.textContent.trim() === category || (category === "all" && item.textContent.trim() === "جميع المحاصيل")) {
+              item.classList.add("active");
+            }
+          });
+        }
+      
+        fetch(API_URL, {
+          headers: { Authorization: AUTH_TOKEN },
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error("فشل في جلب البيانات");
+            return res.json();
+          })
+          .then((products) => {
+            allProducts = products;
+            renderProducts("all");
+          })
+          .catch((err) => {
+            productGrid.innerHTML = `<p style="color: red;">خطأ: ${err.message}</p>`;
+          });
+        
+        window.filterProducts = function (category) {
+          renderProducts(category);
+          setActiveFilter(category);
+        };
+      });
+      
+
+    </script>
+
+<body>
+    <div id="header-container" ></div>
+
+    <div class="header-section">
+        <div class="text-content">
+            <h1>طازجة & محلية</h1>
+            <p>استمتع بأفضل المحاصيل المحلية الطازجة من مزارعنا إلى باب منزلك.</p>
+            <div class="button-container">
+                <button class="custom-button" onclick="location.href='store.html'">
+                    <i class="fas fa-shopping-cart"></i> تسوق الآن
+                </button>
+                
+            </div>
+            
+        </div>
+        <img src="photos/صورة صفحة المحاصيل.png" alt="صورة الفاكهة" class="fruit-image">
+
+        
+    </div>
+
+
+
+    <div class="features-section">
+        <div class="feature">
+            <div class="icon">
+                <img src="photos/Vector.png" alt="أيقونة التنوع الموسمي">
+            </div>
+            <h3>تنوع موسمي</h3>
+            <p>نقدم لك تشكيلة متنوعة من المحاصيل والخضروات حسب المواسم.</p>
+        </div>
+        <div class="feature">
+            <div class="icon">
+                <img src="photos/shopping-bag.png" alt="أيقونة الجودة">
+            </div>
+            <h3>جودة مضمونة</h3>
+            <p>نحن نختار المحاصيل بعناية فائقة لضمان أفضل جودة وطعم.</p>
+        </div>
+        <div class="feature">
+            <div class="icon">
+                <img src="photos/Economy.png" alt="أيقونة دعم الاقتصاد">
+            </div>
+            <h3>دعم الاقتصاد المحلي</h3>
+            <p>جميع المنتجات مأخوذة من مزارعين محليين، مما يساهم في دعم الإنتاج المحلي.</p>
+        </div>
+        <div class="feature">
+            <div class="icon">
+                <img src="photos/delivery-truck 1.png" alt="أيقونة التوصيل السريع">
+            </div>
+            <h3>توصيل سريع</h3>
+            <p>استمتع بتوصيل سريع لمحاصيلك الطازجة مباشرة إلى منزلك.</p>
+        </div>
+    </div>
+    
+<!-- عنوان القسم -->
+<section class="section-title">
+    <h2>مختارات من محاصيلنا المحلية</h2>
+</section>
+
+<!-- قسم الفلترة -->
+<section class="filter-section">
+    <div class="filter-bar">
+        
+        <span class="filter-item" onclick="filterProducts('فواكه')">
+            فواكه
+        </span> |
+        <span class="filter-item" onclick="filterProducts('خضار')">خضار</span>|
+        <span class="filter-item active" onclick="filterProducts('all')">جميع المحاصيل</span> 
+    </div>
+</section>
+
+<!-- قسم المتجر -->
+
+<div class="product-grid">
+</div>
+
+</section>
+
+
+<section class="ad-section">
+    <img src="photos/photo_5839391584242747359_x 1.png" alt="صورة سلة الفواكه" class="ad-image">
+    <div class="ad-text">
+        <h3>عرض منتجات الصيف</h3>
+        <p>احصل على خصم 20% على جميع المنتجات الطازجة المختارة.</p>
+        <button class="custom-button" onclick="location.href='store.html'">تسوق الآن</button>
+
+
+
+    </div>
+</section>
+
+
+
+<!-- قسم الأرقام -->
+<section class="stats-section" style="background-image: url('photos/BG.png'); background-size: cover; background-position: center; padding: 40px 0;">
+    <div class="stats-container">
+        <div class="stat-box">
+            <h2 id="stat1">0</h2>
+            <p>طلبات المنتجات الموسمية</p>
+        </div>
+        <div class="stat-box">
+            <h2 id="stat2">0</h2>
+            <p>زوار الموقع شهرياً</p>
+        </div>
+        <div class="stat-box">
+            <h2 id="stat3">0</h2>
+            <p>مزارعنا</p>
+        </div>
+        <div class="stat-box">
+            <h2 id="stat4">0</h2>
+            <p>منتجنا المتاح</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    // دالة لزيادة الأرقام بشكل تفاعلي
+    function animateNumber(id, end, duration) {
+        let start = 0;
+        const step = Math.ceil(end / (duration / 10));
+        function updateNumber() {
+            start += step;
+            if (start >= end) {
+                document.getElementById(id).innerText = end;
+            } else {
+                document.getElementById(id).innerText = start;
+                requestAnimationFrame(updateNumber);
+            }
+        }
+        updateNumber();
+    }
+
+    // تطبيق الدالة على كل رقم
+    window.onload = function () {
+        animateNumber('stat1', 1, 2000);
+        animateNumber('stat2', 1, 2000);
+        animateNumber('stat3', 1, 2000);
+        animateNumber('stat4', 1, 2000);
+    };
+</script>
+
+
+<!-- قسم المزارعين -->
+<section class="farmers-section">
+    <h2>من قلب الأرض إلى بيتك - هؤلاء هم أبطال محاصيلنا الطازجة</h2>
+    <div class="farmers-grid">
+        <div class="farmer-card">
+            <img src="photos/Image (3).png" alt="مزارع 1">
+            <h3>سارة السبيعي</h3>
+            <p>ضمن زراعة خضروات أساسية بجودة عالية على مدار العام.</p>
+        </div>
+        <div class="farmer-card">
+            <img src="photos/Image (4).png" alt="مزارع 2">
+            <h3>سالم العتيبي</h3>
+            <p>يُعنى بزراعة المحاصيل الموسمية الطازجة بأعلى المعايير.</p>
+        </div>
+        <div class="farmer-card">
+            <img src="photos/Image (5).png" alt="مزارع 3">
+            <h3>فاطمة الحسني</h3>
+            <p>مزارعة تهتم بتقديم أفضل الخضروات الورقية للمستهلك.</p>
+        </div>
+        <div class="farmer-card">
+            <img src="photos/Image (7).png" alt="مزارع 4">
+            <h3>عبدالله الحربي</h3>
+            <p>مزارع ملتزم بجودة الزراعة المستدامة.</p>
+        </div>
+    </div>
+</section>
+
+<!-- قسم التعليقات -->
+<section class="reviews-section">
+    <h2>تعليقات المستخدمين حول المحاصيل</h2>
+    <div class="reviews-grid">
+        <div class="review-card">
+            <p>"جودة المحاصيل ممتازة، سعدت جداً بالتعامل معكم!"</p>
+            <div class="reviewer-info">
+                <span>محمد القحطاني</span>
+                <span>★★★★★</span>
+            </div>
+        </div>
+        <div class="review-card">
+            <p>"أفضل تجربة شراء محاصيل محلية، أنصح الجميع بها."</p>
+            <div class="reviewer-info">
+                <span>نورة العتيبي</span>
+                <span>★★★★★</span>
+            </div>
+        </div>
+        <div class="review-card">
+            <p>"منتجات طازجة وخدمة توصيل سريعة، سأعود للشراء مرة أخرى!"</p>
+            <div class="reviewer-info">
+                <span>سعد المقرن</span>
+                <span>★★★★★</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>تواصل معنا</p>
+        <p>+966 123 456 789 | info@example.com</p>
+        <p>جميع الحقوق محفوظة © 2024</p>
+    </div>
+</footer> 
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+header {
+    width: 100%;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100% !important;
+    direction: rtl; /* جعل الاتجاه من اليمين لليسار */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* مسافة بين الشعار والروابط */
+}
+
+.logo img {
+    width: 120px; /* حجم الشعار */
+    cursor: pointer;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.nav-link:hover {
+    color: #015f0c;
+}
+
+.icons {
+    display: flex;
+    gap: 15px;
+}
+
+.icons i {
+    font-size: 24px;
+    cursor: pointer;
+}

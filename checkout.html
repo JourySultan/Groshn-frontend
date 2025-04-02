@@ -1,0 +1,281 @@
+<!DOCTYPE html> <html lang="ar"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>إتمام الطلب</title>
+    <!-- Modern Arabic-friendly font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
+    
+    <!-- Font Awesome for icons (if needed) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap');
+
+        * {
+            font-family: 'IBM Plex Sans Arabic';
+        }
+    
+        /* Body styling with a subtle gradient background */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(120deg, #FEFEF0 0%, #F2F3EC 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+    
+        /* Main title styling */
+        h1 {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            color: #4E5B41;
+            font-size: 2rem;
+        }
+    
+        /* Container for the entire form */
+        .container {
+            display: block;
+            margin: 30px auto;
+            width: 90%;
+            max-width: 1000px;
+        }
+    
+        /* Form style */
+        .user-details {
+            background: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: right; 
+        }
+    
+        /* Section/heading styles */
+        h2 {
+            color: #4E5B41;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+    
+        /* Set up rows that contain two fields side-by-side */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap; /* allows wrapping on smaller screens */
+            gap: 20px;       /* space between columns */
+            margin-bottom: 15px;
+        }
+    
+        /* Each form group in a row shares the available space */
+        .form-group {
+            flex: 1;
+            min-width: 200px; /* ensures a reasonable min width on smaller screens */
+        }
+    
+        /* Label and input styling */
+        label {
+            display: block;
+            font-weight: bold;
+            color: #4E5B41;
+            margin-bottom: 5px;
+        }
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #8ca045;
+            box-shadow: 0 0 5px rgba(140,160,69,0.3);
+            outline: none;
+        }
+        textarea {
+            height: 60px;
+            resize: vertical;
+        }
+    
+        /* Payment method section */
+        .payment-method {
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .payment-method label {
+            display: block;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        .payment-method input[type="radio"] {
+            margin-left: 5px;
+        }
+    
+        /* Bank details section for bank transfer */
+        #bank-details {
+            display: none;
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            color: #333;
+        }
+        #bank-details p {
+            margin-bottom: 5px;
+            line-height: 1.6;
+        }
+    
+        /* Submit button */
+        .btn {
+            background-color: #B4C65C;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .btn:hover {
+            background-color: #8ca045;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+    
+        /* Responsive adjustment if needed */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column; /* stack fields in smaller screens */
+            }
+        }
+    </style>
+    </head> <body>
+    <!-- Title -->
+    <h1>إتمام الطلب</h1>
+    
+    <!-- Container (holds form) -->
+    <div class="container">
+    
+        <!-- User Details Form -->
+        <form class="user-details" onsubmit="return confirmOrder(event)">
+    
+            <!-- Row 1: First name, Last name -->
+            <h2>كيف يمكننا التواصل معك؟</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>الاسم الأول <span style="color:red">*</span></label>
+                    <input type="text" id="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label>الاسم الأخير <span style="color:red">*</span></label>
+                    <input type="text" id="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label>رقم الهاتف <span style="color:red">*</span></label>
+                    <input type="tel" id="phone" required>
+                </div>
+            </div>
+    
+            <!-- Row 3: Address type, House Number -->
+            <h2>موقع التوصيل</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>نوع العنوان <span style="color:red">*</span></label>
+                    <select id="addressType" required>
+                        <option value="">الرجاء الاختيار</option>
+                        <option>منزل</option>
+                        <option>عمل</option>
+                    </select>
+                    <label>رقم المنزل</label>
+                    <input type="text" id="houseNumber">
+                    <div class="form-group">
+                        <label>اسم مجمع توصيل <span style="color:red">*</span></label>
+                        <input type="text" id="compound" required>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Notes (full width) -->
+            <h2>الملاحظات</h2>
+            <div class="form-row">
+                <div class="form-group" style="flex: 1;">
+                    <textarea id="notes" placeholder="ملاحظات"></textarea>
+                </div>
+            </div>
+    
+            <!-- Payment method -->
+            <h2>وسيلة الدفع</h2>
+            <div class="payment-method">
+                <label>
+                    <input type="radio" name="payment" value="cash_on_delivery" checked onchange="toggleBankInfo()">
+                    دفع عند الاستلام
+                </label>
+                <label>
+                    <input type="radio" name="payment" value="bank" onchange="toggleBankInfo()">
+                    حوالة بنكية
+                </label>
+            </div>
+    
+            <!-- Bank details (hidden until bank transfer is selected) -->
+            <div id="bank-details">
+                <p><strong>بيانات التحويل البنكي:</strong></p>
+                <p>اسم البنك: بنك الرياض</p>
+                <p>رقم الحساب: 1234567890</p>
+                <p>الآيبان: SA12345678901234567890</p>
+            </div>
+    
+            <!-- Submission -->
+            <button class="btn" type="submit">إتمام الدفع</button>
+        </form>
+    </div>
+    
+    <!-- JavaScript to handle payment method and submission -->
+    <script>
+    function toggleBankInfo() {
+        const bankDetails = document.getElementById("bank-details");
+        const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+        bankDetails.style.display = (paymentMethod === "bank") ? "block" : "none";
+    }
+    
+    async function confirmOrder(event) {
+        event.preventDefault();
+    
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("لم يتم العثور على توكن. الرجاء تسجيل الدخول.");
+            return;
+        }
+    
+        const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+        const requestData = {
+            paymentMethod: paymentMethod
+        };
+    
+        try {
+            const response = await fetch("https://Groshn.onrender.com/api/orders", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(requestData)
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert(`خطأ: ${errorData.message || "فشل في إتمام الطلب"}`);
+                return;
+            }
+    
+            alert("تم إتمام الطلب بنجاح!");
+            window.location.href = "order-confirmation.html";
+        } catch (error) {
+            alert("حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.");
+            console.error("Error:", error);
+        }
+    }
+    </script>
+    </body> </html>

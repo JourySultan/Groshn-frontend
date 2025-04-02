@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعادة التدوير - Groshn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="header.css" />
+    <script src="commonscript.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'IBM Plex Sans Arabic';
+            background-color: #FEFEF0;
+            line-height: 1.6;
+        }
+
+        header {
+            width: 100%;
+            background-color: #fff;
+            border-bottom: 2px solid #ddd;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo img {
+            height: 35px;
+        }
+
+        .header-btn {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .main-section {
+            background-color: #B4C65C;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 50px;
+            color: #fff;
+        }
+
+        .main-section img {
+            max-height: 150px;
+            object-fit: contain;
+        }
+
+        .main-section .text-content {
+            max-width: 50%;
+            text-align: right;
+        }
+
+        .main-section h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .main-section p {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .form-container {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 30px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #2a6b25;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2a6b25;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #23871e;
+        }
+
+        footer {
+            background-color: #e0d8b1;
+            text-align: center;
+            padding: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-container"></div>
+    <!-- القسم الأول -->
+    <div class="main-section">
+        <img src="photos/IMG_0827 2.png" alt="إعادة التدوير">
+        
+        <div class="text-content">
+            
+            <h1>بدون هدر، بس على الهدر تأثر</h1>
+            <p>تعليمات عملية للاستفادة من بقايا الأطعمة وإعادة تدويرها بشكل مستدام.</p>
+        </div>
+        
+    </div>
+
+    <!-- استمارة تعبئة -->
+    <div class="form-container">
+        <h2>من الفائض إلى المنفعة</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">الاسم</label>
+                <input type="text" id="name" placeholder="أدخل اسمك">
+            </div>
+            <div class="form-group">
+                <label for="phone">رقم الهاتف</label>
+                <input type="tel" id="phone" placeholder="أدخل رقم هاتفك">
+            </div>
+            <div class="form-group">
+                <label for="product">نوع المنتج</label>
+                <select id="product">
+                    <option value="vegetables">خضروات</option>
+                    <option value="fruits">فواكه</option>
+                    <option value="others">أخرى</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="location">الوقت المناسب</label>
+                <select id="location">
+                    <option value="morning">صباحاً</option>
+                    <option value="evening">مساءً</option>
+                </select>
+            </div>
+            <button type="button" onclick="window.location.href='thank-you.html'">تأكيد</button>
+
+            </form>
+            
+        </form>
+    </div>
+
+    <footer>
+        <p>تواصل معنا</p>
+        <p>+966 123 456 789 | info@example.com</p>
+        <p>© 2024 جميع الحقوق محفوظة لـ Groshn</p>
+    </footer>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("recycle-form").addEventListener("submit", function (event) {
+            event.preventDefault(); // منع الإرسال الافتراضي للفورم
+    
+            // جمع البيانات من الفورم
+            const name = document.getElementById("name").value;
+            const preferredTime = document.getElementById("location").value;
+            const category = document.getElementById("product").value;
+            const phone = document.getElementById("phone").value;
+            
+            // بيانات ثابتة غير مدخلة من المستخدم
+            const cropType = "عضوي";
+            const growthLocation = "بيت محمي";
+    
+            // استرجاع التوكن من LocalStorage
+            const token = localStorage.getItem("authToken");
+    
+            // إنشاء كائن البيانات للإرسال
+            const requestData = {
+                name: name,
+                preferredTime: preferredTime,
+                category: category,
+                cropType: cropType,
+                growthLocation: growthLocation,
+                phone: phone
+            };
+    
+            // إرسال الطلب إلى الـ API
+            fetch("https://Groshn.onrender.com/api/surplus/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Success:", data);
+                window.location.href = "thank-you.html"; // الانتقال لصفحة الشكر
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى!");
+            });
+        });
+    });
+    
+</script>
+</html>

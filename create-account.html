@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title>إنشاء حساب - Groshn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            box-sizing: border-box;
+        }
+
+        header {
+            width: 100%;
+            background-color: #fff;
+            border-bottom: 2px solid #ddd;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo img {
+            height: 35px;
+        }
+
+        .header-btn {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            margin-right: 20px;
+        }
+
+        .logo {
+            margin-right: 30px;
+        }
+
+        .header-section {
+            background-color: #B4C65CAD;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 50px;
+            position: relative;
+            height: 150px;
+        }
+
+        .header-section .text-content {
+            max-width: 50%;
+            text-align: right;
+        }
+
+        .header-section h1 {
+            margin: 0;
+            font-size: 48px;
+            color: #333;
+        }
+
+        .header-section p {
+            font-size: 24px;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .header-section .fruit-image {
+            max-height: 180px;
+            object-fit: contain;
+            margin-right: 20px;
+            margin-bottom: -10px;
+            order: -1;
+        }
+
+        .design-container {
+            background-color: #B4C65CAD;
+            padding: 30px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        } 
+
+        .login-container {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 400px;
+            margin: 30px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .login-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2a6b25;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #B4C65C3B;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2a6b25;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #23871e;
+        }
+
+        p {
+            margin-top: 15px;
+            color: #333;
+        }
+
+        a {
+            color: #2a6b25;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+
+
+
+
+
+
+
+
+  </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+
+ 
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إنشاء حساب - Groshn</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="header-btn">الصفحة الرئيسية</a>
+      <div class="logo">
+        <img src="photos/Logo.png" alt="Groshn Logo">
+      </div>
+    </div>
+  </header>
+
+  <div class="header-section">
+    <img src="photos/صورة تسجيل الدخول.png" alt="صورة الفاكهة" class="fruit-image">
+    <div class="text-content">
+      <h1>! أنشئ حسابك</h1>
+      <p>Groshn انضم إلينا وابدأ رحلتك في</p>
+    </div>
+  </div>
+
+  <div class="login-container">
+    <h2>إنشاء حساب</h2>
+    <form id="register-form">
+      <div class="input-group">
+        <label for="username">اسم المستخدم</label>
+        <input type="text" id="username" required />
+      </div>
+      <div class="input-group">
+        <label for="email">البريد الإلكتروني</label>
+        <input type="email" id="email" required />
+      </div>
+      <div class="input-group">
+        <label for="password">كلمة المرور</label>
+        <input type="password" id="password" required />
+      </div>
+      <div class="input-group">
+        <label for="confirm-password">تأكيد كلمة المرور</label>
+        <input type="password" id="confirm-password" required />
+      </div>
+      <div class="input-group">
+        <label for="phone">رقم الجوال</label>
+        <input type="tel" id="phone" placeholder="05XXXXXXXX" required />
+      </div>
+      <button type="submit">إنشاء حساب</button>
+      <p>لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a></p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("register-form").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+      const phone = document.getElementById("phone").value.trim();
+
+      if (password !== confirmPassword) {
+        alert("كلمة المرور وتأكيدها غير متطابقتين.");
+        return;
+      }
+
+      try {
+        const response = await fetch("https://groshn.onrender.com/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, password, confirmPassword, phone })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert("✅ تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.");
+          window.location.href = "login.html";
+        } else {
+          alert("❌ فشل في إنشاء الحساب: " + (data.message || "يرجى التحقق من البيانات"));
+        }
+      } catch (error) {
+        alert("حدث خطأ أثناء إنشاء الحساب.");
+        console.error(error);
+      }
+    });
+  </script>
+
+</body>
+</html>

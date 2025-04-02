@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المحاصيل</title>
+    <link rel="stylesheet" href="adminstyle.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: var(--border-radius);
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .crop-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>إدارة المحاصيل</h1>
+        <div>
+            <button onclick="location.href='add_new.html'" class="primary-btn">إضافة محصول جديد</button>
+            <button onclick="location.href='adminpanel.html'" class="primary-btn">العودة للرئيسية</button>
+        </div>
+    </header>
+
+    <div class="table-container">
+        <table id="cropsTable">
+            <thead>
+                <tr>
+                    <th>الصورة</th>
+                    <th>اسم المحصول</th>
+                    <th>المزرعة</th>
+                    <th>الكمية</th>
+                    <th>السعر</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>تعديل المحصول</h2>
+            <form id="editForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="editName">اسم المحصول:</label>
+                    <input type="text" id="editName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="editCropImportance">أهمية المحصول:</label>
+                    <input type="text" id="editCropImportance" name="cropImportance" required>
+                </div>
+                <div class="form-group">
+                    <label for="editFarmName">اسم المزرعة:</label>
+                    <input type="text" id="editFarmName" name="farmName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editCropsDescreption">وصف المحصول:</label>
+                    <textarea id="editCropsDescreption" name="cropsDescreption" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editCropStoreMethod">طريقة التخزين:</label>
+                    <input type="text" id="editCropStoreMethod" name="cropStoreMethod" required>
+                </div>
+                <div class="form-group">
+                    <label for="editQuantity">الكمية:</label>
+                    <input type="number" id="editQuantity" name="quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPrice">السعر:</label>
+                    <input type="number" id="editPrice" name="price" required>
+                </div>
+                <div class="form-group">
+                    <label for="editImage">الصورة:</label>
+                    <input type="file" id="editImage" name="image" accept="image/*">
+                </div>
+                <button type="submit" class="primary-btn">حفظ التغييرات</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        let currentCropId = null;
+
+        async function initializeCropsTable() {
+            const crops = await fetchData('/crops');
+            const tbody = document.querySelector('#cropsTable tbody');
+            tbody.innerHTML = '';
+            
+            crops.forEach(crop => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><img src="${crop.image}" alt="${crop.name}" class="crop-image"></td>
+                    <td>${crop.name}</td>
+                    <td>${crop.farmName}</td>
+                    <td>${crop.quantity}</td>
+                    <td>${crop.price} ريال</td>
+                    <td class="action-buttons">
+                        <button onclick="openEditModal('${crop._id}')" class="primary-btn">تعديل</button>
+                        <button onclick="deleteCrop('${crop._id}')" class="primary-btn" style="background-color: #dc3545;">حذف</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function openEditModal(cropId) {
+            currentCropId = cropId;
+            const crop = await fetchData(`/crops/${cropId}`);
+            
+            document.getElementById('editName').value = crop.name;
+            document.getElementById('editCropImportance').value = crop.cropImportance;
+            document.getElementById('editFarmName').value = crop.farmName;
+            document.getElementById('editCropsDescreption').value = crop.cropsDescreption;
+            document.getElementById('editCropStoreMethod').value = crop.cropStoreMethod;
+            document.getElementById('editQuantity').value = crop.quantity;
+            document.getElementById('editPrice').value = crop.price;
+            
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').style.display = 'none';
+            currentCropId = null;
+        }
+
+        document.getElementById('editForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const token = getAuthToken();
+            
+            try {
+                const response = await fetch(`https://Groshn.onrender.com/api/crops/${currentCropId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Failed to update crop');
+                
+                closeModal();
+                initializeCropsTable();
+                alert('تم تحديث المحصول بنجاح');
+            } catch (error) {
+                alert('حدث خطأ أثناء تحديث المحصول');
+                console.error('Error:', error);
+            }
+        });
+
+        async function deleteCrop(cropId) {
+            if (!confirm('هل أنت متأكد من حذف هذا المحصول؟')) return;
+            
+            try {
+                const token = getAuthToken();
+                const response = await fetch(`https://Groshn.onrender.com/api/crops/${cropId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to delete crop');
+                
+                initializeCropsTable();
+                alert('تم حذف المحصول بنجاح');
+            } catch (error) {
+                alert('حدث خطأ أثناء حذف المحصول');
+                console.error('Error:', error);
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('editModal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

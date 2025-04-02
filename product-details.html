@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنتج</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="product-details.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="commonscript.js"></script>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const API_URL = "https://Groshn.onrender.com/api/crops/";
+        const AUTH_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2UxNWFhZWExMDM3ZDc5MjBkMjU4MzEiLCJpYXQiOjE3NDI4MjIxNTR9.Gdw5qT1YFtshj4o1BZ-RePBBtqV2_hBXyTII6-YN-vQ";
+    
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+    
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    
+        // Fetch product data
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id");
+    
+        if (!productId) {
+            showError("خطأ: لم يتم تحديد المنتج");
+            return;
+        }
+    
+        fetch(`${API_URL}${productId}`, {
+            headers: { Authorization: AUTH_TOKEN }
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("فشل في جلب البيانات");
+            return res.json();
+        })
+        .then(product => {
+            updateProductUI(product);
+        })
+        .catch(err => {
+            console.error("خطأ:", err);
+            showError(err.message);
+        });
+    });
+    
+    function updateProductUI(product) {
+        // Update basic product info
+        document.querySelector(".product-image").src = product.image || "photos/default.png";
+        document.querySelector(".product-title").textContent = product.name;
+        document.querySelector(".product-description").textContent = product.cropsDescreption;
+        document.querySelector(".product-price").textContent = `${product.price} ريال`;
+        
+        // Show organic badge if product is organic
+        const organicBadge = document.getElementById("organicBadge");
+        if (product.isOrganic) {
+            organicBadge.style.display = "block";
+        }
+    
+        // Update tab contents
+        document.querySelector(".product-importance").textContent = product.cropImportance;
+        document.querySelector(".product-storage").textContent = product.cropStoreMethod;
+        
+        // Create detailed description with grid layout
+        const descriptionHTML = `
+            <div class="detail-item">
+                <strong>طريقة الحصاد</strong>
+                <span>${product.harvestMethod || "غير متوفر"}</span>
+            </div>
+            <div class="detail-item">
+                <strong>نوع المنتج</strong>
+                <span>${product.isOrganic ? "عضوي" : "غير عضوي"}</span>
+            </div>
+            <div class="detail-item">
+                <strong>نوع السماد</strong>
+                <span>${product.fertilizer || "غير متوفر"}</span>
+            </div>
+            <div class="detail-item">
+                <strong>نظام الزراعة</strong>
+                <span>${product.farmingMethod || "غير متوفر"}</span>
+            </div>
+            <div class="detail-item">
+                <strong>تاريخ الحصاد</strong>
+                <span>${product.harvestDate || "غير متوفر"}</span>
+            </div>
+            <div class="detail-item">
+                <strong>الحجم المتوسط</strong>
+                <span>${product.size || "غير متوفر"}</span>
+            </div>
+            <div class="detail-item">
+                <strong>حجم العبوة</strong>
+                <span>${product.packageSize || "غير متوفر"}</span>
+            </div>
+        `;
+        
+        document.querySelector(".product-full-description").innerHTML = descriptionHTML;
+        const addToCartBtn = document.getElementById("addToCartBtn");
+        addToCartBtn.onclick = () => addToCart(product._id, product.name, product.price);
+    }
+    
+    function showError(message) {
+        const container = document.querySelector('.container');
+        container.innerHTML = `
+            <div class="error-message">
+                <h2>⚠️ ${message}</h2>
+                <a href="index.html" class="add-btn">العودة للصفحة الرئيسية</a>
+            </div>
+        `;
+    }
+    async function addToCart(cropId, name, price) {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          alert("الرجاء تسجيل الدخول أولاً");
+          window.location.href = "login.html";
+          return;
+        }
+  
+        try {
+          const res = await fetch("https://groshn.onrender.com/api/cart", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              cropId,
+              name,
+              price,
+              quantity: 1
+            })
+          });
+  
+          const data = await res.json();
+  
+          if (res.ok) {
+            alert("تمت إضافة المنتج إلى السلة!");
+          } else {
+            alert("فشل في إضافة المنتج: " + (data.message || "حاول لاحقًا"));
+          }
+        } catch (error) {
+          alert("حدث خطأ عند إضافة المنتج إلى السلة");
+          console.error(error);
+        }
+      }
+  
+</script>
+</head>
+<body>
+    <div id="header-container" ></div>
+
+    <main class="container">
+        <div class="product-container">
+            <div class="product-gallery">
+                <img class="product-image" src="" alt="صورة المنتج">
+                <div class="organic-badge" id="organicBadge" style="display: none;">
+                    عضوي
+                </div>
+            </div>
+            
+            <div class="product-details">
+                <h1 class="product-title">اسم المنتج</h1>
+                <p class="product-description">وصف المنتج...</p>
+                <div class="price-section">
+                    <span class="price product-price">سعر المنتج...</span>
+                  
+                    <button class="add-btn" id="addToCartBtn"> 
+                        <span class="btn-text">اضافة إلى السلة</span>
+                        <span class="btn-icon">🛒</span>
+                    </button>
+                    
+                </div>
+
+                <div class="tabs-container">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desc">
+                            <span class="tab-icon">📝</span>
+                            وصف المنتج
+                        </button>
+                        <button class="tab-btn" data-tab="benefits">
+                            <span class="tab-icon">✨</span>
+                            فوائد المنتج
+                        </button>
+                        <button class="tab-btn" data-tab="storage">
+                            <span class="tab-icon">🏪</span>
+                            طريقة التخزين
+                        </button>
+                        <button class="tab-btn" data-tab="reviews">
+                            <span class="tab-icon">⭐</span>
+                            التقييمات
+                        </button>
+                    </div>
+
+                    <div class="tab-content active" id="desc">
+                        <div class="product-full-description"></div>
+                    </div>
+
+                    <div class="tab-content" id="benefits">
+                        <p class="product-importance"></p>
+                    </div>
+
+                    <div class="tab-content" id="storage">
+                        <p class="product-storage"></p>
+                    </div>
+
+                    <div class="tab-content" id="reviews">
+                        <div class="reviews-container">
+                            <p>التقييمات ستظهر هنا قريباً</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2024</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

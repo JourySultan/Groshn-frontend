@@ -1,0 +1,300 @@
+<?php include("db.php"); ?>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المتجر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Arial', sans-serif; 
+}
+
+body { 
+    background-color: #FEFEF0; 
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* محتوى الصفحة */
+.content {
+    flex-grow: 1; /* السماح للمحتوى بأخذ المساحة المتبقية */
+}
+
+/* رأس الصفحة */
+header { 
+    width: 100%; 
+    background-color: white; 
+    padding: 15px 30px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-bottom: 4px solid #B4C65C; 
+}
+
+.logo img { height: 40px; }
+
+.header-btn { 
+    text-decoration: none; 
+    color: black; 
+    font-size: 18px; 
+}
+
+/* تصميم المتجر */
+.store-container { 
+    display: flex; 
+    width: 90%; 
+    max-width: 1200px; 
+    margin-top: 20px; 
+}
+
+.store-sidebar { 
+    width: 250px; 
+    background: #f7f7f7; 
+    padding: 20px; 
+    border-radius: 8px; 
+}
+
+.filter-header h3 { 
+    text-align: center; 
+    color: #4E5B41; 
+    margin-bottom: 15px; 
+}
+
+.filter-section label { 
+    display: block; 
+    margin: 5px 0; 
+}
+
+/* تصميم المنتجات */
+.products { 
+    flex: 1; 
+    margin-left: 20px; 
+}
+
+.products-header { 
+
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 10px; 
+    margin-bottom: 20px; 
+}
+
+.products-header h2 { 
+    text-align: center; 
+    color: #4E5B41; 
+}
+
+/* شبكة المنتجات */
+.product-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 20px; 
+    justify-content: center; 
+}
+
+/* بطاقة المنتج */
+.product-card { 
+    background: #fff; 
+    border-radius: 8px; 
+    padding: 15px; 
+    text-align: center; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    cursor: pointer; 
+    position: relative; 
+}
+
+.product-card img { 
+    max-width: 100%; 
+    border-radius: 8px; 
+    margin-bottom: 10px; 
+}
+
+.product-card h3 { 
+    font-size: 18px; 
+    margin-bottom: 5px; 
+}
+
+.product-card p { 
+    color: #2a6b25; 
+    font-weight: bold; 
+}
+
+.rating { 
+    font-size: 14px; 
+    color: #f1c40f; 
+}
+
+/* زر الإضافة إلى السلة */
+.add-to-cart { 
+    background: #B4C65C; 
+    color: white; 
+    padding: 8px 15px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    position: absolute; 
+    bottom: 10px; 
+    right: 10px; 
+}
+
+/* زر الذهاب لسلة التسوق */
+.cart-button { 
+    background-color: green; 
+    color: white; 
+    padding: 10px 15px; 
+    text-decoration: none; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    transition: 0.3s; 
+    border: none; 
+    cursor: pointer; 
+    font-weight: bold; 
+}
+
+.cart-button:hover { 
+    background-color: darkgreen; 
+}
+
+/* الفوتر في الأسفل */
+footer { 
+    background-color: #e0d8b1; 
+    padding: 20px; 
+    color: black; 
+    text-align: center; 
+    width: 100%; 
+    margin-top: auto;
+    border-top: 2px solid #ddd;
+}
+
+    
+    </style>
+</head>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المتجر - Groshn</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="header.css">
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("header.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("header-container").innerHTML = data;
+            });
+    });
+  </script>
+</head>
+<body>
+  <div id="header-container" style="width:100% !important">
+
+  </div>
+  <div class="store-container">
+    <div class="products">
+      <div class="products-header">
+        <h2>المتجر</h2>
+      </div>
+      <div class="product-grid" id="product-grid"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2024 جميع الحقوق محفوظة | info@example.com | +966 123 456 789</p>
+  </footer>
+
+  <script>
+    async function fetchAndRenderProducts() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("الرجاء تسجيل الدخول أولاً");
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        const res = await fetch("https://groshn.onrender.com/api/crops", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const crops = await res.json();
+        renderProducts(crops);
+      } catch (error) {
+        console.error("فشل في جلب المنتجات:", error);
+      }
+    }
+
+    function renderProducts(products) {
+      const productGrid = document.getElementById("product-grid");
+      productGrid.innerHTML = "";
+
+      products.forEach(product => {
+        productGrid.innerHTML += `
+          <div class='product-card'>
+            <img src='${product.image || "photos/placeholder.png"}' alt='${product.name}'>
+            <h3>${product.name}</h3>
+            <p>${product.price} ريال</p>
+            <span class='rating'>★★★★☆</span>
+            <button class='add-to-cart' onclick='addToCart("${product._id}", "${product.name}", ${product.price})'>إضافة</button>
+          </div>`;
+      });
+    }
+
+    async function addToCart(cropId, name, price) {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("الرجاء تسجيل الدخول أولاً");
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        const res = await fetch("https://groshn.onrender.com/api/cart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            cropId,
+            name,
+            price,
+            quantity: 1
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("تمت إضافة المنتج إلى السلة!");
+        } else {
+          alert("فشل في إضافة المنتج: " + (data.message || "حاول لاحقًا"));
+        }
+      } catch (error) {
+        alert("حدث خطأ عند إضافة المنتج إلى السلة");
+        console.error(error);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchAndRenderProducts);
+  </script>
+</body>
+</html>

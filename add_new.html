@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة محصول جديد</title>
+    <link rel="stylesheet" href="adminstyle.css">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .message {
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+        }
+
+        .error {
+            background-color: #fee;
+            color: #dc3545;
+        }
+
+        .success {
+            background-color: #efe;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>إضافة محصول جديد</h1>
+        <button onclick="location.href='crops.html'" class="primary-btn">العودة لإدارة المحاصيل</button>
+    </header>
+
+    <div class="form-container">
+        <form id="cropForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">اسم المحصول:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cropImportance">أهمية المحصول:</label>
+                <input type="text" id="cropImportance" name="cropImportance" required>
+            </div>
+
+            <div class="form-group">
+                <label for="farmName">اسم المزرعة:</label>
+                <input type="text" id="farmName" name="farmName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cropsDescreption">وصف المحصول:</label>
+                <textarea id="cropsDescreption" name="cropsDescreption" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="cropStoreMethod">طريقة التخزين:</label>
+                <input type="text" id="cropStoreMethod" name="cropStoreMethod" required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">الكمية:</label>
+                <input type="number" id="quantity" name="quantity" required>
+            </div>
+
+            <div class="form-group">
+                <label for="price">السعر:</label>
+                <input type="number" id="price" name="price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="image">الصورة:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>
+
+            <button type="submit" class="primary-btn">إضافة المحصول</button>
+        </form>
+
+        <div id="error-message" class="message error" style="display: none;"></div>
+        <div id="success-message" class="message success" style="display: none;"></div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        document.getElementById('cropForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const token = getAuthToken();
+            
+            try {
+                const response = await fetch('https://Groshn.onrender.com/api/crops', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'حدث خطأ أثناء إضافة المحصول');
+                }
+
+                document.getElementById('success-message').textContent = 'تم إضافة المحصول بنجاح!';
+                document.getElementById('success-message').style.display = 'block';
+                document.getElementById('error-message').style.display = 'none';
+                
+                // Reset form
+                this.reset();
+                
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'crops.html';
+                }, 2000);
+
+            } catch (error) {
+                document.getElementById('error-message').textContent = `خطأ: ${error.message}`;
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('success-message').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

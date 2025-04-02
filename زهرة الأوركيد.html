@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>زهرة الأوركيد - Groshn</title>
+
+</head>
+<body>
+  <header>
+    <a href="index.html" class="header-btn">الصفحة الرئيسية</a>
+    <div class="logo"><img src="photos/Logo.png" alt="Groshn Logo"></div>
+  </header>
+
+  <section class="intro-section">
+    <h1>ازرع، اسقِ، واستمتع بالجمال</h1>
+    <p>سواء كنت مبتدئًا أو خبيرًا، العناية بالنباتات تبدأ بخطوات بسيطة. هنا خطوات تساعدك على جعل كل نبتة تزدهر وتصبح جزءًا من حياتك اليومية.</p>
+  </section>
+
+  <div class="plant-image">
+    <img src="phooo/زهرة الاوركيد.png" alt="زهرة الأوركيد">
+    <h2>زهرة الأوركيد</h2>
+  </div>
+
+  <div class="tabs">
+    <span class="active" onclick="showTab('about')">عن النبتة</span>
+    <span onclick="showTab('water')">الري</span>
+    <span onclick="showTab('care')">الاهتمام</span>
+  </div>
+
+  <div class="plant-info">
+    <div id="about" class="active">
+      <p>زهرة <strong>الأوركيد</strong> هي من أجمل وأشهر الزهور، تتميز بتشكيلتها وألوانها المتنوعة. تعتبر <strong>الأوركيد</strong> رمزًا للجمال والرقي، وتحتاج إلى رعاية دقيقة لضمان ازدهارها.</p>
+    </div>
+    <div id="water">
+      <p>زهرة <strong>الأوركيد</strong> تحتاج دائمًا لتصريف جيد، ويجب ريها عندما تجف التربة جزئيًا، عادةً كل 2-1 أسبوع حسب الظروف ودرجة الحرارة. يُفضل استخدام نوع من التربة المخصصة للأوركيد لتجنب مشاكل التعفن.</p>
+    </div>
+    <div id="care">
+      <p>للاهتمام بزهرة <strong>الأوركيد</strong>، يُنصح بتوفير إضاءة غير مباشرة ودرجة حرارة تتراوح بين 18-24 درجة مئوية. يُفضل تقليم الأزهار الذابلة بانتظام، واستخدام سماد خاص بالأوركيد مرة كل أسبوعين خلال موسم النمو لضمان أفضل النتائج.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2024 جميع الحقوق محفوظة | info@example.com | +966 123 456 789</p>
+  </footer>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tabs span').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.plant-info > div').forEach(section => section.classList.remove('active'));
+      document.querySelector(`.tabs span[onclick="showTab('${tabId}')"]`).classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
+</body>
+</html>

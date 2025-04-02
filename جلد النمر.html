@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جلد النمر - Groshn</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: #FEFEF0;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 4px solid #B4C65C;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .header-btn {
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+    }
+
+    .intro-section {
+      background-color: #d3e2aa;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .intro-section h1 {
+      font-size: 32px;
+      color: #2a6b25;
+      margin-bottom: 10px;
+    }
+
+    .intro-section p {
+      font-size: 18px;
+      color: #444;
+    }
+
+    .plant-image {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .plant-image img {
+      max-width: 250px;
+      height: auto;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .tabs span {
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
+    .tabs .active {
+      color: green;
+      border-bottom: 2px solid green;
+    }
+
+    .plant-info {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .plant-info > div {
+      display: none;
+    }
+
+    .plant-info > div.active {
+      display: block;
+    }
+
+    footer {
+      background-color: #e0d8b1;
+      padding: 20px;
+      color: black;
+      text-align: center;
+      border-top: 2px solid #B4C65C;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="header-btn">الصفحة الرئيسية</a>
+    <div class="logo"><img src="photos/Logo.png" alt="Groshn Logo"></div>
+  </header>
+
+  <section class="intro-section">
+    <h1>ازرع، اسقِ، واستمتع بالجمال</h1>
+    <p>سواء كنت مبتدئًا أو خبيرًا، العناية بالنباتات تبدأ بخطوات بسيطة. هنا خطوات تساعدك على جعل كل نبتة تزدهر وتصبح جزءًا من حياتك اليومية.</p>
+  </section>
+
+  <div class="plant-image">
+    <img src="phooo/جلد النمر.png" alt="جلد النمر">
+    <h2>جلد النمر</h2>
+  </div>
+
+  <div class="tabs">
+    <span class="active" onclick="showTab('about')">عن النبتة</span>
+    <span onclick="showTab('water')">الري</span>
+    <span onclick="showTab('light')">الضوء</span>
+    <span onclick="showTab('care')">الاهتمام</span>
+  </div>
+
+  <div class="plant-info">
+    <div id="about" class="active">
+      <p><strong>جلد النمر</strong> نبات من أشهر النباتات الداخلية، يُعرف علميًا باسم <em>Sansevieria</em>، ويُطلق عليه أيضاً "لسان الحماة". يتميز بأوراقه الطويلة والمخططة التي تنمو عموديًا، مما يمنحه شكلاً فريداً. من أكثر النباتات قدرة على التكيف مع ظروف الإضاءة المختلفة وقلة الري، لذلك يعد مثالياً للمبتدئين.</p>
+    </div>
+    <div id="water">
+      <p>نبات <strong>جلد النمر</strong> يتحمل الجفاف، ويجب تجنب الإفراط في الري. اسقِ النبات عندما تجف التربة جزئياً، عادةً كل أسبوعين إلى ثلاث أسابيع. تأكد من أن التربة جيدة التصريف لتفادي تعفن الجذور. خلال فصل الشتاء، قم بتقليل كمية الري لأن النمو يقل في هذا الموسم.</p>
+    </div>
+    <div id="light">
+      <p><strong>جلد النمر</strong> من النباتات التي تنمو في الضوء المتوسط إلى الساطع غير المباشر. يمكنه أيضاً التأقلم مع الإضاءة المنخفضة، مما يجعله خيارًا مثاليًا للمكاتب أو الغرف ذات الإضاءة الضعيفة. تجنب تعريضه للشمس المباشرة لفترات طويلة لأنها قد تؤدي إلى احتراق الأوراق.</p>
+    </div>
+    <div id="care">
+      <p>نبات <strong>جلد النمر</strong> لا يحتاج إلى رعاية مكثفة، مما يجعله خياراً رائعاً للمبتدئين. قم بمسح أوراقه من الغبار بين الحين والآخر، واستخدم سمادًا متوازنًا مرة كل شهرين خلال فصلي الربيع والصيف. يُفضل أن يكون في أصيص به فتحات تصريف لتجنب ركود الماء. ينمو جيداً في درجات حرارة تتراوح بين 18-27 درجة مئوية.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2024 جميع الحقوق محفوظة | info@example.com | +966 123 456 789</p>
+  </footer>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tabs span').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.plant-info > div').forEach(section => section.classList.remove('active'));
+      document.querySelector(`.tabs span[onclick="showTab('${tabId}')"]`).classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
+</body>
+</html>

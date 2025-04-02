@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>طماطم - Groshn</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #fefef0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    header {
+      background-color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 4px solid #b4c65c;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .header-btn {
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+    }
+
+    .product-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 50px;
+      padding: 40px;
+    }
+
+    .product-container img {
+      max-width: 300px;
+      border-radius: 8px;
+    }
+
+    .product-info {
+      max-width: 500px;
+    }
+
+    .product-info h1 {
+      color: #2a6b25;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 20px;
+      color: green;
+      margin: 15px 0;
+    }
+
+    .add-btn {
+      padding: 10px 20px;
+      background-color: #b4c65c;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+      gap: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .tabs span.active {
+      color: green;
+      border-bottom: 2px solid green;
+    }
+
+    .tab-content {
+      max-width: 800px;
+      margin: 30px auto;
+      text-align: center;
+      line-height: 1.8;
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    footer {
+      background-color: #e0d8b1;
+      padding: 20px;
+      text-align: center;
+      margin-top: auto;
+      border-top: 2px solid #b4c65c;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="header-btn">الصفحة الرئيسية</a>
+    <div class="logo"><img src="photos/Logo.png" alt="Groshn Logo"></div>
+  </header>
+
+  <div class="product-container">
+    <img src="photos/زهره.png" alt="صورة الطماطم">
+    <div class="product-info">
+        <h1>زهرة</h1>
+        <p>نبتة غنية بالألياف والفيتامينات، تُستخدم في الطهي بعدة طرق مثل القلي أو السلق أو الشواء.</p>
+        <div class="price">10 ريال</div>
+        <button class="add-btn">شراء من المتجر</butoon>
+        </div>
+        </div>
+        
+        <div class="tabs">
+          <span class="active" onclick="showTab('desc')">وصف المنتج</span>
+          <span onclick="showTab('benefits')">فوائد المنتج</span>
+          <span onclick="showTab('storage')">طريقة التخزين</span>
+          <span onclick="showTab('reviews')">تعليقات المستخدمين</span>
+        </div>
+        
+        <div id="desc" class="tab-content active">
+          <p>
+            <strong>تحصيل:</strong> زهرة طازجة بيضاء اللون<br>
+            <strong>عضوي أم غير عضوي:</strong> عضوي 100% مزروعة بدون مبيدات كيميائية<br>
+            <strong>نوع السماد المستخدم:</strong> سماد عضوي متحلل<br>
+            <strong>نظام الزراعة:</strong> زراعة محمية داخل البيوت البلاستيكية<br>
+            <strong>تاريخ الحصاد:</strong> تم الحصاد خلال هذا الأسبوع<br>
+            <strong>الحجم المتوسط:</strong> 500 - 800 جرام للرأس الواحد<br>
+            <strong>حجم العبوة:</strong> رأس واحد أو حسب الوزن المختار
+          </p>
+        </div>
+        
+        <div id="benefits" class="tab-content">
+          <p>
+            <strong>غنية بالألياف:</strong> تعزز صحة الجهاز الهضمي<br>
+            <strong>تحتوي على مضادات أكسدة:</strong> تساهم في مقاومة الالتهابات<br>
+            <strong>مفيدة لمرضى السكر:</strong> تساعد في ضبط مستويات السكر في الدم<br>
+            <strong>منخفضة السعرات الحرارية:</strong> مناسبة للحمية الغذائية
+          </p>
+        </div>
+        
+        <div id="storage" class="tab-content">
+          <p>
+            <strong>درجة حرارة منخفضة:</strong> يُفضل حفظها في الثلاجة<br>
+            <strong>مدة التخزين:</strong> تدوم حتى أسبوع كامل عند تبريدها جيدًا<br>
+            <strong>طريقة الحفظ:</strong> تُخزن في كيس ورقي أو بلاستيكي مثقوب داخل الثلاجة
+          </p>
+        </div>
+        
+
+  
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tabs span').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      document.querySelector(`.tabs span[onclick="showTab('${tabId}')"]`).classList.add('active');
+    }
+  </script>
+</body>
+</html>

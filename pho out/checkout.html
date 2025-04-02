@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الطلب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; direction: rtl; }
+        body { background-color: #FEFEF0; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .container { display: flex; justify-content: center; margin: 30px auto; width: 90%; max-width: 1000px; }
+        .order-summary, .user-details { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        .order-summary { flex: 1; margin-left: 20px; }
+        .user-details { flex: 2; text-align: right; }
+        h2 { color: #4E5B41; margin-bottom: 15px; }
+        .summary-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; }
+        .summary-item img { width: 50px; border-radius: 5px; }
+        .summary-item span { font-size: 16px; }
+        .summary-total { font-weight: bold; margin-top: 15px; font-size: 18px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        textarea { height: 60px; }
+        .payment-method { background: #f7f7f7; padding: 10px; border-radius: 10px; text-align: right; }
+        .btn { background-color: #B4C65C; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 10px; cursor: pointer; margin-top: 15px; width: 100%; }
+        .btn:hover { background-color: #8ca045; }
+    </style>
+</head>
+<body>
+
+    <h1>إتمام الطلب</h1>
+    
+    <div class="container">
+        <!-- ✅ قسم ملخص الطلب -->
+        <div class="order-summary">
+            <h2>ملخص الطلب</h2>
+            <div id="cart-summary"></div>
+            <div class="summary-total">المجموع النهائي: <span id="total-price">0</span> ريال</div>
+        </div>
+
+        <!-- ✅ قسم بيانات المستخدم -->
+        <div class="user-details">
+            <h2>كيف يمكننا التواصل معك؟</h2>
+            <div class="form-group">
+                <label>الاسم الأول *</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>الاسم الأخير *</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>رقم الهاتف *</label>
+                <input type="tel" required>
+            </div>
+
+            <h2>موقع التوصيل</h2>
+            <div class="form-group">
+                <label>اسم مجمع توصيل *</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>نوع العنوان *</label>
+                <select>
+                    <option>الرجاء الاختيار</option>
+                    <option>منزل</option>
+                    <option>عمل</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>رقم المنزل</label>
+                <input type="text">
+            </div>
+
+            <h2>الملاحظات</h2>
+            <div class="form-group">
+                <textarea placeholder="ملاحظات"></textarea>
+            </div>
+
+            <!-- ✅ طريقة الدفع -->
+            <h2>وسيلة الدفع</h2>
+            <div class="payment-method">
+                <label><input type="radio" name="payment" checked> دفع عند الاستلام</label><br>
+                <label><input type="radio" name="payment"> حوالة بنكية</label>
+            </div>
+
+            <!-- ✅ زر إتمام الدفع -->
+            <button class="btn" onclick="confirmOrder()">إتمام الدفع</button>
+        </div>
+    </div>
+
+    <script>
+        // ✅ تحميل المنتجات من localStorage وعرضها في ملخص الطلب
+        function loadCartSummary() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let cartSummary = document.getElementById("cart-summary");
+            let totalPrice = 0;
+
+            if (cart.length === 0) {
+                cartSummary.innerHTML = "<p>سلة التسوق فارغة.</p>";
+                return;
+            }
+
+            cartSummary.innerHTML = "";
+            cart.forEach(item => {
+                let totalItemPrice = item.price * item.quantity;
+                totalPrice += totalItemPrice;
+                cartSummary.innerHTML += `
+                    <div class="summary-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <span>${item.quantity}x ${item.name}</span>
+                        <span>${totalItemPrice} ريال</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById("total-price").innerText = totalPrice + 10; // إضافة رسوم التوصيل
+        }
+
+        // ✅ عند الضغط على إتمام الدفع، احذف السلة وانتقل لصفحة التأكيد
+        function confirmOrder() {
+            localStorage.removeItem('cart');
+            window.location.href = "order-confirmation.html";
+        }
+
+        document.addEventListener("DOMContentLoaded", loadCartSummary);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم</title>
+    <link rel="stylesheet" href="adminstyle.css">
+</head>
+<body>
+    <header>
+        <h1>مرحباً من جديد</h1>
+        <button id="addNewBtn" class="primary-btn">تسجيل الخروج</button>
+    </header>
+
+    <main class="dashboard-grid">
+        <div class="card" onclick="location.href='crops.html'">
+            <div class="card-icon">🌾</div>
+            <h3>إدارة المحاصيل</h3>
+            <p>إضافة وإدارة المحاصيل في الصفحة الرئيسية</p>
+        </div>
+
+        <div class="card" onclick="location.href='orders.html'">
+            <div class="card-icon">📦</div>
+            <h3>إدارة الطلبات</h3>
+            <p>مراجعة وإدارة طلبات العملاء</p>
+        </div>
+
+        <div class="card" onclick="location.href='recycling.html'">
+            <div class="card-icon">♻️</div>
+            <h3>طلبات إعادة التدوير</h3>
+            <p>مراجعة طلبات إعادة تدوير المحاصيل</p>
+        </div>
+
+        <div class="card" onclick="location.href='accounts.html'">
+            <div class="card-icon">👥</div>
+            <h3>إدارة الحسابات</h3>
+            <p>إدارة حسابات العملاء والمزارعين</p>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

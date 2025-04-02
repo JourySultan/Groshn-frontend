@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلبات إعادة التدوير</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>طلبات إعادة التدوير</h1>
+        <button onclick="location.href='index.html'" class="primary-btn">العودة للرئيسية</button>
+    </header>
+
+    <div class="table-container">
+        <table id="recyclingTable">
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>رقم الهاتف</th>
+                    <th>نوع المحصول</th>
+                    <th>الوقت المفضل</th>
+                    <th>التاريخ</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        async function initializeRecyclingTable() {
+            const recyclingRequests = await fetchData('/surplus');
+            const tbody = document.querySelector('#recyclingTable tbody');
+            
+            recyclingRequests.forEach(request => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${request.name}</td>
+                    <td>${request.phone}</td>
+                    <td>${request.cropType}</td>
+                    <td>${request.preferredTime}</td>
+                    <td>${formatDate(request.createdAt)}</td>
+                    <td>
+                        <button onclick="viewRecyclingDetails('${request._id}')" class="primary-btn">التفاصيل</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>

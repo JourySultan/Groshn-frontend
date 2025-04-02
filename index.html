@@ -1,0 +1,181 @@
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title>Groshn</title>
+    <!-- تضمين مكتبة Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="header.css" />
+    <!-- تضمين مكتبة FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("header.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("header-container").innerHTML = data;
+                });
+        });
+    </script>
+
+</head>
+<body>
+    <div id="header-container" ></div>
+
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="photos/Rectangle 4219.png" alt="موسم الرمان">
+                <div class="swiper-caption">موسم الرمان</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="photos/Rectangle 4218.png" alt="موسم الخوخ المحلي">
+                <div class="swiper-caption">الخوخ المحلي - حلاته بوقته</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="teen.png" alt="موسم التين">
+                <div class="swiper-caption">موسم التين</div>
+            </div>
+        </div>
+        <!-- عنصر النقاط -->
+        <div class="swiper-pagination"></div>
+    </div>
+    
+    </div>
+    <div class="about-section">
+        <h2>Groshn</h2>
+        </p>منصة مبتكرة تهدف إلى تعزيز الاستدامة والحياة الصحية في مجتمعات روشن. نعمل على توفير محاصيل طازجة من مزارع محلية مباشرة إلى باب منزلك، مع دعم مشاريع خضراء ومبادرات لإعادة تدوير المحاصيل الفائضة، مما يساهم في تحقيق بيئة صحية ومجتمع مترابط.</p>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="mostdam.png" alt="حول روشن">
+                <div class="image-overlay">
+                    <p>انضم إلينا وساهم في بناء مجتمع مستدام وصحي</p>
+                    <button onclick="window.location.href='login.html';">انضم الآن</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+<div class="content">
+    <!-- الأقسام الجديدة -->
+    <div class="section-container">
+        <div class="section">
+            <img src="photos/Frame 56.png" alt="صورة القسم 1">
+            <div class="section-content">
+                <h3>من خير أرضنا لبيتك</h3>
+                <p>احصل على محاصيل طازجة , من مزارعين محليين</p>
+                <button class="custom-button" onclick="location.href='products.html'">
+                    تصفح المحاصيل
+                </button>
+            </div>
+        </div>
+        
+        <div class="section">
+            <img src="photos/احياء روشن.png" alt="صورة القسم 2">
+            <div class="section-content">
+                <h3>إحياء روشن</h3>
+                <p>انضم إلى مبادرة “حدائق روشن الحية”، حيث يمكنك المساهمة في زراعة المساحات الخضراء داخل مجتمعك.</p>
+                <button class="custom-button" onclick="location.href='participate.html'">
+                    اكتشف الزراعة
+                </button>
+            </div>
+        </div>
+        
+        <div class="section">
+            <img src="photos/اعادة التدوير.png" alt="صورة القسم 3">
+            <div class="section-content">
+                <h3>إعادة التدوير</h3>
+                <p>ساهم معنا في تقليل الهدر وتحقيق الاستدامة عبر إعادة تدوير المحاصيل التالفة من منزلك.</p>
+                <button class="custom-button" onclick="location.href='benefit.html'">
+                    ابدأ بإعادة التدوير
+                </button>
+            </div>
+        </div>
+        
+        <div class="section">
+            <img src="photos/الات البيع.png" alt="صورة القسم 4">
+            <div class="section-content">
+                <h3>مواقع آلات البيع الذاتية</h3>
+                <p>توفر آلات البيع الذاتية في مجتمعات روشن خيارات سريعة وصحية من محاصيل مزارعينا، مما يتيح لك تناول وجبة خفيفة طازجة وصحية أثناء ممارسة الأنشطة اليومية.</p>
+                <button class="custom-button" onclick="location.href='pos-points.html'">
+                    اكتشف المواقع
+                </button>
+            </div>
+        </div>
+        
+        <div class="section" style="padding-bottom: 20px;">
+            <img src="photos/Frame 56 (1).png" alt="صورة القسم 5">
+            <div class="section-content">
+                <h3>تعليمات عملية للاستفادة من بقايا الأطعمة</h3>
+                <p>تعلّم كيفية الاستفادة من بقايا الأطعمة بطريقة عملية لتقليل الهدر.</p>
+                <button class="custom-button" onclick="location.href='recycle-benefits.html'">
+                    استفد من الفائض
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <footer>
+    <div class="footer-container">
+        <h3>تواصل معنا</h3>
+        <div class="contact-details">
+            <div class="contact-item">
+                <i class="fa-solid fa-phone"></i>
+                <span>+966500000000</span>
+            </div>
+            <div class="contact-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span>info.yrees.sa@gmail.com</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- تضمين مكتبة Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- كود JavaScript الخاص بـ Swiper -->
+<script>
+    const swiper = new Swiper('.swiper-container', {
+        loop: true,
+        autoplay: {
+            delay: 3000, // مدة الثبات لكل صورة
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        }
+    });
+</script>
+
+<!-- تضمين كود DocsBot -->
+<script type="text/javascript">window.DocsBotAI=window.DocsBotAI||{},DocsBotAI.init=function(e){return new Promise((t,r)=>{var n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://widget.docsbot.ai/chat.js";let o=document.getElementsByTagName("script")[0];o.parentNode.insertBefore(n,o),n.addEventListener("load",()=>{let n;Promise.all([new Promise((t,r)=>{window.DocsBotAI.mount(Object.assign({}, e)).then(t).catch(r)}),(n=function e(t){return new Promise(e=>{if(document.querySelector(t))return e(document.querySelector(t));let r=new MutationObserver(n=>{if(document.querySelector(t))return e(document.querySelector(t)),r.disconnect()});r.observe(document.body,{childList:!0,subtree:!0})})})("#docsbotai-root"),]).then(()=>t()).catch(r)}),n.addEventListener("error",e=>{r(e.message)})})};</script>
+<script type="text/javascript">
+  DocsBotAI.init({id: "zPQkgKWeXiNTrGmQFJ0v/b1OV3eHqUInM1Gavpbv6"});
+</script>
+
+</body>
+
+</html>

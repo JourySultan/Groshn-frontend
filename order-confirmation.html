@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تم تأكيد طلبك بنجاح!</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; direction: rtl; }
+    body { text-align: center; background-color: #FEFEF0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .confirmation-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); width: 80%; max-width: 600px; }
+    h1 { color: #4E5B41; margin-bottom: 10px; }
+    p { font-size: 18px; color: #333; margin: 10px 0; }
+    .details-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    .details-table td { padding: 10px; border-bottom: 1px solid #ddd; text-align: right; font-size: 16px; }
+    .btn { background-color: #B4C65C; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 10px; cursor: pointer; margin-top: 15px; width: 100%; }
+    .btn:hover { background-color: #8ca045; }
+    .email-info { margin-top: 20px; font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+
+  <div class="confirmation-container">
+    <h1>✅ تم تأكيد طلبك بنجاح!</h1>
+    <p>شكرًا لك على اختيارك لنا! سيتم معالجة طلبك على الفور، وسيتم تجهيزه في أسرع وقت ممكن.</p>
+
+    <table class="details-table">
+      <tr>
+        <td><strong>رقم الطلب:</strong></td>
+        <td id="order-number">#</td>
+      </tr>
+      <tr>
+        <td><strong>عنوان التوصيل:</strong></td>
+        <td id="order-address">-</td>
+      </tr>
+      <tr>
+        <td><strong>وسيلة الدفع:</strong></td>
+        <td id="payment-method">-</td>
+      </tr>
+      <tr>
+        <td><strong>وقت التسليم:</strong></td>
+        <td id="delivery-time">خلال 10 دقائق</td>
+      </tr>
+    </table>
+
+    <button class="btn" onclick="window.location.href='index.html'">الصفحة الرئيسية</button>
+
+    <p class="email-info">هل تحتاج إلى مساعدة؟ تواصل معنا عبر <a href="mailto:info@example.com">info@example.com</a></p>
+  </div>
+
+  <script>
+    function generateOrderNumber() {
+      return '#' + Math.floor(100000 + Math.random() * 900000);
+    }
+
+    const order = JSON.parse(localStorage.getItem("orderDetails"));
+
+    if (order) {
+      document.getElementById("order-number").textContent = generateOrderNumber();
+      document.getElementById("order-address").textContent = 
+        `${order.compound} - ${order.addressType}${order.houseNumber ? '، رقم المنزل: ' + order.houseNumber : ''}`;
+      document.getElementById("payment-method").textContent = 
+        (order.paymentMethod === 'bank') ? 'حوالة بنكية' : 'دفع عند الاستلام';
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ 
+  </script>
+
+</body>
+</html>
