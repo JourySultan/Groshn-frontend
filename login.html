@@ -1,85 +1,187 @@
-
-<html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-
-    <title>تسجيل الدخول - Groshn</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="loginstyle.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تسجيل الدخول - Groshn</title>
+  <link rel="stylesheet" href="loginstyle.css" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
-   <header>
-    <div class="header-container">
-      <a href="index.html" class="header-btn">الصفحة الرئيسية</a>
-      <div class="logo">
-        <img src="photos/Logo.png" alt="Groshn Logo">
+  <header>
+    <div class="container">
+      <div class="header-container">
+        <div class="logo">
+          <img src="photos/Logo.png" alt="Groshn Logo" />
+        </div>
+        <a href="index.html" class="header-btn">الصفحة الرئيسية</a>
+
       </div>
     </div>
   </header>
 
-  <div class="header-section">
-    <img src="photos/صورة تسجيل الدخول.png" alt="صورة الفاكهة" class="fruit-image">
-    <div class="text-content">
-      <h1>! أهلاً بعودتك</h1>
-      <p>Groshn سجل دخولك لتبدأ رحلتك معنا في</p>
-    </div>
-  </div>
+  <main>
+    <div class="header-section">
+      <div class="container">
+        <div class="header-content">
+          <div class="text-content">
+            <h1>! أهلاً بعودتك</h1>
+            <p> سجل دخولك لتبدأ رحلتك معنا في Groshn</p>
+          </div>
+          <img src="photos/صورة تسجيل الدخول.png" alt="صورة الفاكهة" class="fruit-image" />
 
-  <div class="login-container">
-    <h2>تسجيل الدخول</h2>
-    <form id="login-form">
-      <div class="input-group">
-        <label for="email">البريد الإلكتروني</label>
-        <input type="email" id="email" placeholder="email@gmail.com" required>
+        </div>
       </div>
-      <div class="input-group">
-        <label for="password">كلمة المرور</label>
-        <input type="password" id="password" placeholder="••••••••" required>
+    </div>
+
+    <div class="container">
+      <div class="login-container">
+        <h2>تسجيل الدخول</h2>
+        <form id="login-form" novalidate>
+          <div class="input-group">
+            <label for="email">البريد الإلكتروني</label>
+            <input type="email" id="email" placeholder="email@gmail.com" required />
+            <span class="error-message"></span>
+          </div>
+          <div class="input-group">
+            <label for="password">كلمة المرور</label>
+            <div class="password-input">
+              <input type="password" id="password" placeholder="••••••••" required />
+              <button type="button" class="toggle-password" aria-label="عرض كلمة المرور">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5c-7.333 0-12 6-12 6s4.667 6 12 6 12-6 12-6-4.667-6-12-6z"/>
+                  <circle cx="12" cy="11" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <span class="error-message"></span>
+          </div>
+          <div class="remember-forgot">
+            <label class="checkbox-container">
+              <input type="checkbox" id="remember" />
+              <span class="checkmark"></span>
+              تذكرني
+            </label>
+            <a href="#" class="forgot-link">نسيت كلمة المرور؟</a>
+          </div>
+          <button type="submit" class="submit-btn">
+            <span class="btn-text">تسجيل الدخول</span>
+            <span class="loader"></span>
+          </button>
+          <p class="signup-link">ليس لديك حساب؟ <a href="create-account.html">إنشاء حساب</a></p>
+        </form>
       </div>
-      <div class="remember-forgot">
-        <label><input type="checkbox"> نسيت كلمة المرور</label>
-      </div>
-      <button type="submit">تسجيل الدخول</button>
-      <p>ليس لديك حساب؟ <a href="create-account.html">إنشاء حساب</a></p>
-    </form>
-  </div>
+    </div>
+  </main>
 
   <script>
-    document.getElementById("login-form").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
 
-      if (!email || !password) {
-        alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
-        return;
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('login-form');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const togglePassword = document.querySelector('.toggle-password');
+  const submitBtn = form.querySelector('.submit-btn');
+  const btnText = submitBtn.querySelector('.btn-text');
+  const loader = submitBtn.querySelector('.loader');
+
+  // Toggle password visibility
+  togglePassword.addEventListener('click', () => {
+    const type = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = type;
+    togglePassword.innerHTML = type === 'password' 
+      ? '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c-7.333 0-12 6-12 6s4.667 6 12 6 12-6 12-6-4.667-6-12-6z"/><circle cx="12" cy="11" r="3"/></svg>'
+      : '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+  });
+
+  // Form validation
+  const showError = (input, message) => {
+    const errorElement = input.parentElement.querySelector('.error-message');
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+    input.classList.add('error');
+  };
+
+  const hideError = (input) => {
+    const errorElement = input.parentElement.querySelector('.error-message');
+    errorElement.style.display = 'none';
+    input.classList.remove('error');
+  };
+
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  // Handle form submission
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let isValid = true;
+
+    // Validate email
+    if (!emailInput.value.trim()) {
+      showError(emailInput, 'يرجى إدخال البريد الإلكتروني');
+      isValid = false;
+    } else if (!validateEmail(emailInput.value.trim())) {
+      showError(emailInput, 'يرجى إدخال بريد إلكتروني صحيح');
+      isValid = false;
+    } else {
+      hideError(emailInput);
+    }
+
+    // Validate password
+    if (!passwordInput.value) {
+      showError(passwordInput, 'يرجى إدخال كلمة المرور');
+      isValid = false;
+    } else if (passwordInput.value.length < 6) {
+      showError(passwordInput, 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+      isValid = false;
+    } else {
+      hideError(passwordInput);
+    }
+
+    if (!isValid) return;
+
+    // Show loading state
+    submitBtn.disabled = true;
+    btnText.style.opacity = '0';
+    loader.style.display = 'block';
+
+    try {
+      const response = await fetch('https://groshn.onrender.com/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: emailInput.value.trim(),
+          password: passwordInput.value
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        window.location.href = 'confirm-location.html';
+      } else {
+        throw new Error(data.message || 'فشل تسجيل الدخول');
       }
+    } catch (error) {
+      showError(emailInput, 'فشل تسجيل الدخول. يرجى التحقق من البيانات المدخلة');
+    } finally {
+      submitBtn.disabled = false;
+      btnText.style.opacity = '1';
+      loader.style.display = 'none';
+    }
+  });
 
-      try {
-        const response = await fetch("https://groshn.onrender.com/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password })
-        });
+  // Real-time validation
+  emailInput.addEventListener('input', () => {
+    if (emailInput.value.trim()) hideError(emailInput);
+  });
 
-        const data = await response.json();
-        console.log("Login Response:", data);
-
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          alert("تم تسجيل الدخول بنجاح!");
-          window.location.href = "onfirm-location.html";
-        } else {
-          alert("فشل تسجيل الدخول: " + (data.message || "يرجى التحقق من البريد وكلمة المرور"));
-        }
-
-      } catch (error) {
-        alert("حدث خطأ أثناء الاتصال بالخادم");
-        console.error("Login Error:", error);
-      }
-    });
+  passwordInput.addEventListener('input', () => {
+    if (passwordInput.value) hideError(passwordInput);
+  });
+});
   </script>
 </body>
 </html>
