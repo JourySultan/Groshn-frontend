@@ -7,6 +7,7 @@
 
     <title>إنشاء حساب - Groshn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="common.css">
     <style>
         body, html {
             margin: 0;
@@ -57,9 +58,63 @@
             position: relative;
             height: 150px;
         }
-
-        .header-section .text-content {
-            max-width: 50%;
+        @media (max-width: 1024px) {
+          .header-section {
+              padding: 0 30px;
+              height: auto;
+              flex-direction: column-reverse;
+              text-align: center;
+          }
+      
+          .header-section .fruit-image {
+              order: 0;
+              margin: 10px auto 0;
+              height: 120px;
+          }
+      }
+      
+      @media (max-width: 768px) {
+          .header-section {
+              padding: 20px;
+              flex-direction: column-reverse;
+          }
+      
+          .header-section .fruit-image {
+              height: 100px;
+          }
+      
+          .header-section h1 {
+              font-size: 24px;
+          }
+      
+          .header-section p {
+              font-size: 16px;
+          }
+      }
+      
+      @media (max-width: 480px) {
+          .header-section {
+              flex-direction: column-reverse;
+              padding: 10px;
+              justify-content: center;
+              align-items: center;
+          }
+      
+          .header-section .fruit-image {
+              height: 80px;
+              margin-bottom: 10px;
+          }
+      
+          .header-section h1 {
+              font-size: 20px;
+          }
+      
+          .header-section p {
+              font-size: 14px;
+          }
+      }
+      
+        .text-content {
             text-align: right;
         }
 
@@ -76,12 +131,12 @@
         }
 
         .header-section .fruit-image {
-            max-height: 180px;
-            object-fit: contain;
-            margin-right: 20px;
-            margin-bottom: -10px;
-            order: -1;
-        }
+          max-height: 100%;
+          object-fit: contain;
+          margin-bottom: 0;
+          order: -1;
+      }
+      
 
         .design-container {
             background-color: #B4C65CAD;
@@ -174,22 +229,6 @@
 
 
   </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </head>
 <body>
 
@@ -217,7 +256,8 @@
     <img src="photos/صورة تسجيل الدخول.png" alt="صورة الفاكهة" class="fruit-image">
     <div class="text-content">
       <h1>! أنشئ حسابك</h1>
-      <p>Groshn انضم إلينا وابدأ رحلتك في</p>
+      <p >Groshn انضم إلينا وابدأ رحلتك في</p>
+
     </div>
   </div>
 

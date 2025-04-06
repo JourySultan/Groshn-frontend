@@ -3,6 +3,20 @@
 box-sizing: border-box;
 font-family: 'IBM Plex Sans Arabic';
 }
+.add-btn {
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    background-color: #2e7d32;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer
+}
 
 body, html {
 margin: 0;
