@@ -67,7 +67,7 @@
   
   /* Hero Section */
   .header-section {
-    background-color: var(--secondary-light);
+    background-color: var(--secondary-color);
     padding: 2rem 0;
     margin-bottom: 2rem;
   }
