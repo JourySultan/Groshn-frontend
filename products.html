@@ -29,20 +29,22 @@
             const filteredProducts = category === "all" ? allProducts : allProducts.filter(product => product.category === category);
             
             filteredProducts.forEach((product) => {
-              const productCard = document.createElement("a");
-              productCard.href = `product-details.html?id=${product._id}`;
-              productCard.className = "product-card";
-              productCard.style.textDecoration = "none";
-              productCard.style.color = "inherit";
-              productCard.innerHTML = `
-                <img src="${product.image}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p>${product.price} ريال</p>
-                <div class="rating">★★★★★</div>
-              `;
-              productGrid.appendChild(productCard);
-            });
-          }
+                const productCard = document.createElement("div");
+                productCard.className = "product-card";
+                productCard.innerHTML = `
+                  <a href="product-details.html?id=${product._id}" style="text-decoration: none; color: inherit;">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.price} ريال</p>
+                    <div class="rating">★★★★★</div>
+                  </a>
+                  <button onclick="addToCart('${product._id}', '${product.name}', ${product.price})" class="add-to-cart">
+                    <i class="fas fa-cart-plus"></i> أضف للسلة
+                  </button>
+                `;
+                productGrid.appendChild(productCard);
+              });
+            }
           
         function setActiveFilter(category) {
           filterItems.forEach(item => {
@@ -73,8 +75,41 @@
           setActiveFilter(category);
         };
       });
-      
-
+      async function addToCart(cropId, name, price) {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          alert("الرجاء تسجيل الدخول أولاً");
+          window.location.href = "login.html";
+          return;
+        }
+    
+        try {
+          const res = await fetch("https://groshn.onrender.com/api/cart", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              cropId,
+              name,
+              price,
+              quantity: 1,
+            }),
+          });
+    
+          const data = await res.json();
+    
+          if (res.ok) {
+            alert("تمت إضافة المنتج إلى السلة!");
+          } else {
+            alert("فشل في إضافة المنتج: " + (data.message || "حاول لاحقًا"));
+          }
+        } catch (error) {
+          alert("حدث خطأ عند إضافة المنتج إلى السلة");
+          console.error(error);
+        }
+      }
     </script>
 
 <body>
