@@ -80,33 +80,9 @@
         // Create detailed description with grid layout
         const descriptionHTML = `
             <div class="detail-item">
-                <strong>طريقة الحصاد</strong>
-                <span>${product.harvestMethod || "غير متوفر"}</span>
+              ${product.cropImportance}
             </div>
-            <div class="detail-item">
-                <strong>نوع المنتج</strong>
-                <span>${product.isOrganic ? "عضوي" : "غير عضوي"}</span>
-            </div>
-            <div class="detail-item">
-                <strong>نوع السماد</strong>
-                <span>${product.fertilizer || "غير متوفر"}</span>
-            </div>
-            <div class="detail-item">
-                <strong>نظام الزراعة</strong>
-                <span>${product.farmingMethod || "غير متوفر"}</span>
-            </div>
-            <div class="detail-item">
-                <strong>تاريخ الحصاد</strong>
-                <span>${product.harvestDate || "غير متوفر"}</span>
-            </div>
-            <div class="detail-item">
-                <strong>الحجم المتوسط</strong>
-                <span>${product.size || "غير متوفر"}</span>
-            </div>
-            <div class="detail-item">
-                <strong>حجم العبوة</strong>
-                <span>${product.packageSize || "غير متوفر"}</span>
-            </div>
+            
         `;
         
         document.querySelector(".product-full-description").innerHTML = descriptionHTML;
@@ -188,11 +164,7 @@
 
                 <div class="tabs-container">
                     <div class="tabs">
-                        <button class="tab-btn active" data-tab="desc">
-                            <span class="tab-icon">📝</span>
-                            وصف المنتج
-                        </button>
-                        <button class="tab-btn" data-tab="benefits">
+                        <button class="tab-btn active" data-tab="benefits">
                             <span class="tab-icon">✨</span>
                             فوائد المنتج
                         </button>
