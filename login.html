@@ -104,6 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const hideError = (input) => {
     const errorElement = input.parentElement.querySelector('.error-message');
+    if (!errorElement) return; // تجنب الكسر
+    
     errorElement.style.display = 'none';
     input.classList.remove('error');
   };
