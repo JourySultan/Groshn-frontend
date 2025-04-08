@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -133,55 +132,58 @@
         }
     </style>
 </head>
+
 <body>
-    <div id="header-container"></div>
-    <!-- القسم الأول -->
+
     <div class="main-section">
         <img src="photos/IMG_0827 2.png" alt="إعادة التدوير">
-        
         <div class="text-content">
-            
-            <h1> 
-
-                يد وحدة ما تصفق ، بس على الهدر تأثر 
-            </h1>
+            <h1>يد وحدة ما تصفق، بس على الهدر تأثر</h1>
             <p>تعليمات عملية للاستفادة من بقايا الأطعمة وإعادة تدويرها بشكل مستدام.</p>
         </div>
-        
     </div>
 
-    <!-- استمارة تعبئة -->
     <div class="form-container">
         <h2>من الفائض إلى المنفعة</h2>
-        <form>
+        <form id="recycleForm">
             <div class="form-group">
                 <label for="name">الاسم</label>
-                <input type="text" id="name" placeholder="أدخل اسمك">
+                <input type="text" id="name" name="name" required>
             </div>
+
             <div class="form-group">
                 <label for="phone">رقم الهاتف</label>
-                <input type="tel" id="phone" placeholder="أدخل رقم هاتفك">
+                <input type="tel" id="phone" name="phone" required>
             </div>
-            <div class="form-group">
-                <label for="product">نوع المنتج</label>
-                <select id="product">
-                    <option value="vegetables">خضروات</option>
-                    <option value="fruits">فواكه</option>
-                    <option value="others">أخرى</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="location">الوقت المناسب</label>
-                <select id="location">
-                    <option value="morning">صباحاً</option>
-                    <option value="evening">مساءً</option>
-                </select>
-            </div>
-            <button type="button" onclick="window.location.href='thank-you.html'">تأكيد</button>
 
-            </form>
-            
+            <div class="form-group">
+                <label for="cropType">نوع المحصول</label>
+                <select id="cropType" name="cropType" required>
+                    <option value="خضار">
+                        خضار
+                    </option>
+                    <option value="فواكه">
+                        فواكه
+                     </option>
+                    <option value="آخرى">
+                        آخرى
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="preferredTime">الوقت المناسب</label>
+                <select id="preferredTime" name="preferredTime" required>
+                    <option value="صباحاً">صباحاً</option>
+                    <option value="مساءً">مساءً</option>
+                </select>
+            </div>
+
+            <button type="submit" class="primary-btn">تأكيد الطلب</button>
         </form>
+
+        <div id="error-message" class="message error"></div>
+        <div id="success-message" class="message success"></div>
     </div>
 
     <footer>
@@ -189,55 +191,55 @@
         <p>+966 123 456 789 | info@example.com</p>
         <p>© 2024 جميع الحقوق محفوظة لـ Groshn</p>
     </footer>
-</body>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("recycle-form").addEventListener("submit", function (event) {
-            event.preventDefault(); // منع الإرسال الافتراضي للفورم
-    
-            // جمع البيانات من الفورم
-            const name = document.getElementById("name").value;
-            const preferredTime = document.getElementById("location").value;
-            const category = document.getElementById("product").value;
-            const phone = document.getElementById("phone").value;
+
+    <script src="main.js"></script>
+    <script>
+        document.getElementById('recycleForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            // بيانات ثابتة غير مدخلة من المستخدم
-            const cropType = "عضوي";
-            const growthLocation = "بيت محمي";
-    
-            // استرجاع التوكن من LocalStorage
-            const token = localStorage.getItem("authToken");
-    
-            // إنشاء كائن البيانات للإرسال
-            const requestData = {
-                name: name,
-                preferredTime: preferredTime,
-                category: category,
-                cropType: cropType,
-                growthLocation: growthLocation,
-                phone: phone
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                cropType: document.getElementById('cropType').value,
+                preferredTime: document.getElementById('preferredTime').value
             };
-    
-            // إرسال الطلب إلى الـ API
-            fetch("https://Groshn.onrender.com/api/surplus/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(requestData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Success:", data);
-                window.location.href = "thank-you.html"; // الانتقال لصفحة الشكر
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى!");
-            });
+
+            const token = getAuthToken();
+            
+            try {
+                const response = await fetch('https://Groshn.onrender.com/api/surplus', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'حدث خطأ أثناء إرسال الطلب');
+                }
+
+                document.getElementById('success-message').textContent = 'تم إرسال طلب إعادة التدوير بنجاح!';
+                document.getElementById('success-message').style.display = 'block';
+                document.getElementById('error-message').style.display = 'none';
+                
+                // Reset form
+                this.reset();
+                
+                // Redirect after 3 seconds
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+
+            } catch (error) {
+                document.getElementById('error-message').textContent = `خطأ: ${error.message}`;
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('success-message').style.display = 'none';
+            }
         });
-    });
-    
-</script>
+    </script>
+</body>
 </html>
